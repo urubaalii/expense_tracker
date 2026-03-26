@@ -17,7 +17,7 @@ class _ExpensesState extends State<Expenses> {
         children: [
           Text("CHART GOES HERE"),
           SizedBox(height: 30),
-          Text("EXPENNSES GOES HERE"),
+          Text("EXPENNSES List GOES HERE"),
         ]
       )
     );
