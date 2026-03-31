@@ -12,7 +12,21 @@ class ExpenseItem extends StatelessWidget{
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20, vertical: 16),
-        child: Text(expense.title),
+        child: Column(
+          children: [
+            Text(expense.title), //this is the title textbox. we wrapped in a column and padding refactoring
+            const SizedBox(height: 4), //space between title and amount
+            Row(children: [ //we need things in this row of the col, so we use a row to put them next to each other
+              Text('\$${expense.amount.toStringAsFixed(2)}'), //this is the price amount
+              Spacer(), //puts a space between the amount and the date. pushes everything to the other side
+              Row(children: [
+                const Icon(Icons.alarm), //change this to icon for cat later
+                const SizedBox(width: 8), //space between icon and date
+                Text(expense.date.toString()) //change this date to look better
+              ])
+            ],)
+          ],
+        ),
       )
     );
   }
