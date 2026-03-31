@@ -1,0 +1,19 @@
+import 'package:expense_tracker/models/expense.dart';
+import 'package:flutter/material.dart';
+
+class ExpenseItem extends StatelessWidget{  
+  const ExpenseItem({super.key, required this.expense});   //this will display the expense
+  final Expense expense;
+  
+@override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20, vertical: 16),
+        child: Text(expense.title),
+      )
+    );
+  }
+}
