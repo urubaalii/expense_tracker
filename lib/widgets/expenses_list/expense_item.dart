@@ -20,9 +20,9 @@ class ExpenseItem extends StatelessWidget{
               Text('\$${expense.amount.toStringAsFixed(2)}'), //this is the price amount
               Spacer(), //puts a space between the amount and the date. pushes everything to the other side
               Row(children: [
-                const Icon(Icons.alarm), //change this to icon for cat later
+                Icon(categoryIcons[expense.category]), //icon category mapping from the map we made in the expense.dart file, we use the category of the expense to get the icon from the map
                 const SizedBox(width: 8), //space between icon and date
-                Text(expense.date.toString()) //change this date to look better
+                Text(expense.formattedDate) //this is the date, we use the getter we made in the expense.dart to get the formatted date
               ])
             ],)
           ],
