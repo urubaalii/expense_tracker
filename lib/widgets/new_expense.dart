@@ -11,6 +11,12 @@ class _NewExpenseState extends State<NewExpense>{
 final _titleController = TextEditingController();
 final _amountController = TextEditingController();
 
+void dispose(){
+  _titleController.dispose(); //lifecycle method. what do i do when widget leaves screen
+  _amountController.dispose(); //when you close the modal, dispose makes it so it isnt saving in memory and its not running in the background
+  super.dispose();
+}
+
   @override
   Widget build(BuildContext context) {
     return Padding(padding: EdgeInsets.all(16),
@@ -34,13 +40,15 @@ final _amountController = TextEditingController();
             label: Text("Amount"),
           ),
         ),
-        
+
        Row(children: [
+        ElevatedButton(onPressed: (){ //button: when button gets hit, print the price, and the text
+        }, child: Text("Cancel"))
+        
         ElevatedButton(onPressed: (){ //button: when button gets hit, print the price, and the text
           print(_titleController.text);
           print(_amountController.text);
-        }, child: Text("Save Expense")
-        )
+        }, child: Text("Save Expense"))
        ],)
       ]
     )
