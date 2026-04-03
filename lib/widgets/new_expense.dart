@@ -9,6 +9,7 @@ class NewExpense extends StatefulWidget {
 }
 class _NewExpenseState extends State<NewExpense>{
 final _titleController = TextEditingController();
+final _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +24,21 @@ final _titleController = TextEditingController();
           label: Text("Title"),
         ),
        ),
-       Row(children: [
-        //make the amount field here for homework
-       ]),
+        //make the amount field here for homework, use text field
+        TextField(
+          controller:_amountController, //made separate controller
+          maxLength: 6,
+          keyboardType: TextInputType.number, //this makes the keyboard only show numbers
+          decoration: InputDecoration(
+            prefixText: '\$', //this is the $ sign before the number
+            label: Text("Amount"),
+          ),
+        ),
+        
        Row(children: [
         ElevatedButton(onPressed: (){ //button: when button gets hit, print the price, and the text
           print(_titleController.text);
+          print(_amountController.text);
         }, child: Text("Save Expense")
         )
        ],)
