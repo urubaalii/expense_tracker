@@ -131,7 +131,7 @@ void dispose(){
         }, child: Text("Cancel")),
         
         ElevatedButton(
-          onPressed: _submitExpeneseData,
+          onPressed: _submitExpenseData,
     
        child: Text("Save Expense"),
        ),
