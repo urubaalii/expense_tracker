@@ -15,9 +15,18 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   void _openAddExpenseOverlay(){ //this = launching up a widget and passing it into here and then associated w the key press
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
-      builder: (ctx) => NewExpense());
+      builder: (ctx) => NewExpense(
+        onAddExpense:_addExpense));
   }
+
+  void _addExpense(Expense expense){ //this is the function that will be called when the user submits the new expense form. 
+    setState(() { //it takes an expense as an argument and adds it to the list of registered expenses. then it calls setState to update the screen with the new expense.
+      _registeredExpenses.add(expense);
+    });
+  }
+
   final List<Expense> _registeredExpenses =[
   Expense(
     title: "Gino's Pizza",

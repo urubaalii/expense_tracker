@@ -4,7 +4,8 @@ import '../models/expense.dart';
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+  final void Function(Expense expense) onAddExpense; 
 
   State<NewExpense> createState(){
     return _NewExpenseState();
@@ -16,6 +17,33 @@ final _amountController = TextEditingController();
 DateTime? _selectedDate; //? bc it has no value when we first open the modal, but it will have a value after we pick a date. this is the variable that will store the date that the user picks
 Category _selectedCategory = Category.leisure; //this is the variable that will store the category that the user selects. it starts as leisure by default, but it will change when the user selects a different category from the dropdown menu
 
+void _submitExpenseData(){
+final enteredAmount = double.tryParse(_amountController.text);
+final amountIsInvalid  = enteredAmount == null || enteredAmount <= 0; //this checks if the amount is a valid number and if it is greater than 0
+if(_titleController.text.trim().isEmpty || amountIsInvalid || _selectedDate == null) { //this checks if the title is empty, if the amount is invalid, or if the date is not selected
+showDialog(context: context, builder: (ctx)=>AlertDialog(
+  title: const Text("Invalid Input!"),
+  content: const Text("Please make sure to have a valid title, amount, and date."),
+  actions: [
+    TextButton(
+      onPressed: (){
+        Navigator.pop(ctx);
+      },
+      child: Text("Okay")
+    ),
+  ]
+));
+return;
+}
+widget.onAddExpense(Expense(
+  title: _titleController.text,
+  amount: enteredAmount,
+  date: _selectedDate!,
+  category: _selectedCategory,
+));
+//save the data
+}
+
 void _presentDatePicker() async { //this is the function that will show the date picker when the calendar button is pressed. it wont end until the user is done interacting w it.
 final now = DateTime.now();
 final firstDate = DateTime(now.year - 1, now.month, now.day); //this is the first date that can be selected (1 year ago) (ranges)
@@ -26,7 +54,7 @@ final firstDate = DateTime(now.year - 1, now.month, now.day); //this is the firs
   lastDate: now
   );
   print(pickedDate); //this is the date that the user picked
-setState(() { //update screen 
+  setState(() { //update screen 
   _selectedDate = pickedDate; //this is where we save the date that the user picked 
 });}
 
@@ -39,7 +67,7 @@ void dispose(){
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: EdgeInsets.all(16),
+    return Padding(padding: EdgeInsets.fromLTRB(16, 48, 16, 16),
     child: Column(
       children:[
        TextField( //this is in the modal.. this is where we will enter the title of the expense
@@ -78,7 +106,7 @@ void dispose(){
             ],),)
           ],
         ),
-
+        SizedBox(height:10),
        Row(children: [
         DropdownButton(
           value: _selectedCategory,
@@ -97,15 +125,16 @@ void dispose(){
             });
           },
         ),
-
+        Spacer(), //this is the space between the dropdown menu and the buttons
         ElevatedButton(onPressed: (){ //button: when button gets hit, print the price, and the text
         Navigator.pop(context); //pops current screen off stack and goes back to main screen
         }, child: Text("Cancel")),
         
-        ElevatedButton(onPressed: (){ //button: when button gets hit, print the price, and the text
-          print(_titleController.text);
-          print(_amountController.text);
-        }, child: Text("Save Expense"))
+        ElevatedButton(
+          onPressed: _submitExpeneseData,
+    
+       child: Text("Save Expense"),
+       ),
        ],)
       ]
     )
