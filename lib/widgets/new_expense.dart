@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../models/expense.dart';
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
@@ -13,6 +14,7 @@ class _NewExpenseState extends State<NewExpense>{
 final _titleController = TextEditingController();
 final _amountController = TextEditingController();
 DateTime? _selectedDate; //? bc it has no value when we first open the modal, but it will have a value after we pick a date. this is the variable that will store the date that the user picks
+Category _selectedCategory = Category.leisure; //this is the variable that will store the category that the user selects. it starts as leisure by default, but it will change when the user selects a different category from the dropdown menu
 
 void _presentDatePicker() async { //this is the function that will show the date picker when the calendar button is pressed. it wont end until the user is done interacting w it.
 final now = DateTime.now();
@@ -45,7 +47,7 @@ void dispose(){
         maxLength: 50,
         keyboardType: TextInputType.name,
         decoration :InputDecoration(
-          label: Text("Title"),
+          label: Text('Title'),
         ),
        ),
         //make the amount field here for homework, use text field
@@ -78,6 +80,24 @@ void dispose(){
         ),
 
        Row(children: [
+        DropdownButton(
+          value: _selectedCategory,
+          items: Category.values.map( //this is how we get all the values of the enum and turn them into dropdown menu items
+            (category) => DropdownMenuItem(
+              value: category, //this is the value that will be saved when the user selects this option
+              child: Text(category.name.toUpperCase(),),
+            ),
+          ).toList(),
+          onChanged: (value){
+            if(value == null){ //if value is null return, otherwise set state to selected category
+              return;
+            }
+            setState((){
+              _selectedCategory = value; //this is where we save the category that the user selected
+            });
+          },
+        ),
+
         ElevatedButton(onPressed: (){ //button: when button gets hit, print the price, and the text
         Navigator.pop(context); //pops current screen off stack and goes back to main screen
         }, child: Text("Cancel")),
