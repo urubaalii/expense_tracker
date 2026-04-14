@@ -13,8 +13,11 @@ class ExpenseItem extends StatelessWidget{
         padding: const EdgeInsets.symmetric(
           horizontal: 20, vertical: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(expense.title), //this is the title textbox. we wrapped in a column and padding refactoring
+            Text(expense.title, //this is the title textbox. we wrapped in a column and padding refactoring
+            style: Theme.of(context).textTheme.titleLarge,
+            ), 
             const SizedBox(height: 4), //space between title and amount
             Row(children: [ //we need things in this row of the col, so we use a row to put them next to each other
               Text('\$${expense.amount.toStringAsFixed(2)}'), //this is the price amount
