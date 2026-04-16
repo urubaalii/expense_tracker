@@ -27,6 +27,8 @@ void main() {
     )
     ),
 
+
+//dark mode:
     darkTheme: ThemeData.dark().copyWith(
       colorScheme: kColorScheme,
     cardTheme: CardThemeData(
@@ -35,7 +37,7 @@ void main() {
     ), 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: kColorScheme.primaryContainer,
+        backgroundColor: kDarkColorScheme.primaryContainer,
         foregroundColor: kDarkColorScheme.onPrimaryContainer
     ),
     )
