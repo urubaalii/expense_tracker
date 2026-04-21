@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/expense.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:io'; //this is for the platform check to show different dialogs for ios and android
+
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
@@ -21,7 +24,9 @@ void _submitExpenseData(){
 final enteredAmount = double.tryParse(_amountController.text);
 final amountIsInvalid  = enteredAmount == null || enteredAmount <= 0; //this checks if the amount is a valid number and if it is greater than 0
 if(_titleController.text.trim().isEmpty || amountIsInvalid || _selectedDate == null) { //this checks if the title is empty, if the amount is invalid, or if the date is not selected
-showDialog(context: context, builder: (ctx)=>AlertDialog(
+showCupertinoDialog(
+context: context, 
+builder: (ctx)=>CupertinoAlertDialog(
   title: const Text("Invalid Input!"),
   content: const Text("Please make sure to have a valid title, amount, and date."),
   actions: [
