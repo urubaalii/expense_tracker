@@ -12,7 +12,7 @@ class NewExpense extends StatefulWidget {
 
   State<NewExpense> createState(){
     return _NewExpenseState();
-  }
+  } //cards, dismissable, modal, validation, saving data with controllers, asynchronous in new_expense with datapicker..., "dispose"
 }
 class _NewExpenseState extends State<NewExpense>{
 final _titleController = TextEditingController();
@@ -47,6 +47,7 @@ widget.onAddExpense(Expense(
   category: _selectedCategory,
 ));
 //save the data
+Navigator.pop(context); //this is what closes the modal after we save the data. it pops the current screen off the stack and goes back to the main screen
 }
 
 void _presentDatePicker() async { //this is the function that will show the date picker when the calendar button is pressed. it wont end until the user is done interacting w it.
